@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css"; 
+import "aos/dist/aos.css";
 import img1 from '../../assets/img/Kandhablack.jpeg';
+import img2 from '../../assets/img/Kandha.jpeg';
 import experience from '../../assets/img/experience.png';
-import  education from '../../assets/img/education.png';
+import education from '../../assets/img/education.png';
+import { Canvas } from '@react-three/fiber';
+import { TextureLoader } from 'three';
 
 
 export default function AboutMe() {
@@ -11,6 +14,19 @@ export default function AboutMe() {
     AOS.init({
     });
   }, []);
+
+
+  const [texture, setTexture] = useState(img1);
+
+  const handleMouseEnter = () => {
+    setTexture(img2); // Change to the hover texture
+  };
+
+  const handleMouseLeave = () => {
+    setTexture(img1); // Change back to the original texture
+  };
+
+
   return (
     <section id="AboutMe" className="about--section">
       <div
@@ -19,7 +35,19 @@ export default function AboutMe() {
         data-aos-easing="linear"
         data-aos-duration="1500"
       >
-        <img src={img1} alt="About Me" />
+        <Canvas style={{ height: '120vh' }}>
+          <ambientLight />
+          <pointLight position={[10, 10, 10]} />
+          <mesh
+            onPointerOver={handleMouseEnter}
+            onPointerOut={handleMouseLeave}
+          >
+            <planeGeometry args={[5, 5]} />
+            <meshBasicMaterial>
+              <primitive attach="map" object={new TextureLoader().load(texture)} />
+            </meshBasicMaterial>
+          </mesh>
+        </Canvas>
       </div>
       <div className="hero--section--content--box about--section--box">
         <div className="hero--section--content">

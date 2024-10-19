@@ -5,6 +5,7 @@ import Kandha from '../../assets/img/Kandha.jpeg';
 import resume from '../../assets/img/KandhasUpdated.pdf';
 import linkedin from '../../assets/img/linkedin.png';
 import github from '../../assets/img/github.png'
+import {ReactJs, JavaScript, GitHub} from "../ThreeDScene/ThreeDScene";
 
 export default function HeroSection() {
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function HeroSection() {
         data-aos="fade-right"
         data-aos-duration="3000"
       >
-        <div className="hero--section--content">
+        <div style={{marginTop:40}} className="hero--section--content"  >
           <p className="section--title">Hey, I'm Kandhasamy</p>
           <h1 className="hero--section--title">
             <span className="hero--section-title--color">Front End</span> <br />
@@ -74,11 +75,28 @@ export default function HeroSection() {
         </div>
       </div>
       <div
-        className="hero--section--img"
+        className="hero--section--content--box"
         data-aos="fade-left"
         data-aos-duration="3000"
+        style={{width:"100%", display:"flex", justifyContent:"center"}}
       >
-        <img src={Kandha} alt="Hero Section" />
+        <div  style={{width:"100%", display:"flex", alignItems:"center", flexDirection:"column"}}>
+        <ReactJs />
+          <h2>React Js</h2>
+        </div>
+        <div  style={{width:"100%", display:"flex", alignItems:"center", flexDirection:"column"}}>
+        <JavaScript />
+          <h2>Java Script</h2>
+        </div>
+        <div  style={{width:"100%", display:"flex", alignItems:"center", flexDirection:"column"}}>
+        <GitHub />
+          <h2>GitHub</h2>
+        </div>
+       
+
+
+        
+        {/* <img src={Kandha} alt="Hero Section" /> */}
       </div>
     </section>
   );

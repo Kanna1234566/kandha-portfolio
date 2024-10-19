@@ -63,8 +63,8 @@
     {
       "id": "2",
       "src": "./img/modern-dashboard.png",
-      "title": "Industrial Dashboard for Role-Based Access Control",
-      "description": "Developing a RBAC dashboard for industrial data management using Blazor Server. Working on front-end development, designing and implementing interactive data visualizations and user interface. Utilizing Blazor Server for server-side logic and dynamic content generation, ensuring seamless integration with the front-end. Implementing real-time communication features using SignalR for live updates. Integrating role-based access control features. Utilizing technologies including Blazor Server, HTML, CSS, JavaScript, C#, SignalR, DataTables, Chart.js, jQuery, Bootstrap, SQL, Advantage database server."
+      "title": "AI-Powered Photo Gallery Application",
+      "description": "Developed a dynamic photo gallery app with client-side AI-based face recognition using React. Designed and implemented the user interface using React, ensuring a responsive and user-friendly experience. Developed features for uploading, organizing, and managing photos within the gallery, including tagging, searching,and categorizing based on recognized faces. Added features for bulk photo uploads, batch face recognition processing, and intuitive interfaces for manual tagging and verification. Conducted comprehensive testing with Jest and Cypress, and deployed the application using Netlify/Vercel with CI/CD pipelines."
     }
   ],
   "testimonial": [
