@@ -9,6 +9,7 @@ export default function ContactMe() {
         <h2>Contact Me</h2>
       </div>
       <div class="contact-info-upper-container">
+        
         <div class="contact-info-container">
           <img
             src={email}
