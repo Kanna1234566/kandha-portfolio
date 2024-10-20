@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Kandha from '../../assets/img/Kandha.jpeg';
-import resume from '../../assets/img/KandhasUpdated.pdf';
+import resume from '../../assets/img/KandhaProfile.pdf';
 import linkedin from '../../assets/img/linkedin.png';
 import github from '../../assets/img/github.png'
 import {ReactJs, JavaScript, GitHub} from "../ThreeDScene/ThreeDScene";
@@ -82,7 +82,7 @@ export default function HeroSection() {
       >
         <div  style={{width:"100%", display:"flex", alignItems:"center", flexDirection:"column"}}>
         <ReactJs />
-          <h2>React Js</h2>
+          <h2>React Native</h2>
         </div>
         <div  style={{width:"100%", display:"flex", alignItems:"center", flexDirection:"column"}}>
         <JavaScript />

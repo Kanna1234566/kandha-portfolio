@@ -1,90 +1,99 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import threed from "../../assets/3D/3DReact.glb";
+import threed from "../../assets/3D/Obj1.glb";
 import threedev from "../../assets/3D/Dev3D.glb";
 import githubModel from "../../assets/3D/GitHub.glb"; // Rename to avoid confusion
 
-const Model = ({ modelPath, scale = [1, 1, 1], onHover }) => {
+const Model = ({ modelPath }) => {
     const gltf = useLoader(GLTFLoader, modelPath);
     const modelRef = useRef();
+    const [rotationY, setRotationY] = useState(0);
+    const [prevMouseX, setPrevMouseX] = useState(0);
+    const [isMoving, setIsMoving] = useState(false); // State to track if mouse is moving
+    const [timer, setTimer] = useState(null); // Timer state
 
-    // Animation loop to rotate the model
+    // Animation loop to set model rotation
     useFrame(() => {
-        if (modelRef.current) {
-            modelRef.current.rotation.y += 0.01; // Rotate model on the y-axis
+        if (modelRef.current && isMoving) {
+            modelRef.current.rotation.y += rotationY; // Rotate only when mouse is moving
         }
     });
+
+    // Handle mouse movement to update rotation
+    const handleMouseMove = (event) => {
+        const mouseX = event.clientX;
+
+        // Calculate the difference from the previous mouse position
+        const deltaX = mouseX - prevMouseX;
+
+        // Update Y rotation based on the difference in mouse movement
+        setRotationY(deltaX * 0.01); // Scale for rotation speed
+
+        // Update the previous mouse position
+        setPrevMouseX(mouseX);
+
+        // Set mouse moving state
+        setIsMoving(true);
+
+        // Clear any existing timer
+        if (timer) {
+            clearTimeout(timer);
+        }
+
+        // Set a new timer to stop rotation after 3 seconds of inactivity
+        const newTimer = setTimeout(() => {
+            setIsMoving(false); // Stop rotation when mouse is inactive
+        }, 3000);
+
+        setTimer(newTimer); // Update the timer state
+    };
+
+    // Reset previous mouse position on mouse leave
+    const handleMouseLeave = () => {
+        setPrevMouseX(0);
+        setIsMoving(false); // Stop rotation on mouse leave
+        if (timer) {
+            clearTimeout(timer); // Clear timer on mouse leave
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            // Clean up the timer on component unmount
+            if (timer) {
+                clearTimeout(timer);
+            }
+        };
+    }, [timer]);
 
     return (
         <primitive
             ref={modelRef}
             object={gltf.scene}
-            scale={scale}
-            onPointerOver={() => onHover(true)}   // When the mouse is over the model
-            onPointerOut={() => onHover(false)}   // When the mouse leaves the model
+            scale={[6, 6, 6]} // Set scale to 4x4x4
+            onPointerMove={handleMouseMove} // Rotate based on mouse move
+            onPointerLeave={handleMouseLeave} // Reset on mouse leave
         />
     );
 };
 
-const GitHub = () => {
-    const [hovered, setHovered] = useState(false); // State to track hover
-
-    // Function to handle hover state
-    const handleHover = (isHovered) => {
-        setHovered(isHovered);
-    };
-
+// Common Canvas component
+const ModelCanvas = ({ modelPath }) => {
     return (
-        <Canvas style={{ height: '30vh', width: 120 }}>
+        <Canvas style={{ height: '30vh', width: '120px' }}>
             <ambientLight intensity={0.5} />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
             <pointLight position={[-10, -10, -10]} />
-            <Model 
-                modelPath={githubModel} 
-                scale={hovered ? [9, 9, 3] : [8, 8, 2]}  
-                onHover={handleHover} 
-            />
+            <Model modelPath={modelPath} />
         </Canvas>
     );
 };
 
-
-const JavaScript = () => {
-    const [hovered, setHovered] = useState(false); // State to track hover
-
-    // Function to handle hover state
-    const handleHover = (isHovered) => {
-        setHovered(isHovered);
-    };
-    return (
-        <Canvas style={{ height: '30vh', width: 120 }}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
-            <Model modelPath={threedev}    scale={hovered ? [9, 9, 3] : [8, 8, 2]}  
-                onHover={handleHover}  />
-        </Canvas>
-    );
-};
-
-const ReactJs = () => {
-    const [hovered, setHovered] = useState(false); // State to track hover
-
-    // Function to handle hover state
-    const handleHover = (isHovered) => {
-        setHovered(isHovered);
-    };
-    return (
-        <Canvas style={{ height: '30vh', width: 120 }}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
-            <Model modelPath={threed}   scale={hovered ? [9, 9, 3] : [8, 8, 2]}  
-                onHover={handleHover}  />
-        </Canvas>
-    );
-};
+// Individual Model Components
+const GitHub = () => <ModelCanvas modelPath={githubModel} />;
+const JavaScript = () => <ModelCanvas modelPath={threedev} />;
+const ReactJs = () => <ModelCanvas modelPath={threed} />;
 
 // Export the components
 export { ReactJs, JavaScript, GitHub };

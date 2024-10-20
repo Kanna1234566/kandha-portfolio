@@ -293,9 +293,26 @@ h2 {
   border-radius: 10.6px;
   background: var(--bg-shade);
   min-height: 250px;
+  transition: all 0.3s ease;
 }
 .skills--section--card:hover {
   border-bottom: 4px solid var(--primary);
+  background-image: url('../src/assets/img/CardBG.jpg');
+  background-position: center;
+  background-size: cover;
+  color: #f5fcff;
+}
+
+
+.skills--section--title,
+.skills--section--description {
+  color: #000;
+  transition: color 0.3s ease;
+}
+
+.skills--section--title.hover-text,
+.skills--section--description.hover-text {
+  color: #fff !important;
 }
 .skills--section--card:hover .skills--section--description {
   color: var(--darkblue);
@@ -323,6 +340,7 @@ h2 {
   font-weight: 700;
   line-height: 45px;
 }
+
 .skills--section--description {
   color: var(--black);
   font-size: 21.3px;
